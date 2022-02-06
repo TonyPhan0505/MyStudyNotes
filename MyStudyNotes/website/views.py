@@ -39,7 +39,7 @@ def filtered_notes():
 		else:
 			notes = Note.query.filter(Note.data.contains(criteria))
 			flash("Successfully fitered!", category = "success")
-			return render_template("filtered_notes.html", notes = notes, user = current_user)
+	return render_template("filtered_notes.html", notes = notes, user = current_user)
 
 @views.route('/delete-note', methods=['POST'])
 def delete_note():
