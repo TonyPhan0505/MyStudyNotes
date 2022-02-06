@@ -35,6 +35,7 @@
 	  {% for note in d[subject] %}
 	  <li class="list-group-item">
             {{ note[2] }}
+	    <br/>
 	    {{ note[0] }}
 	    <button type="button" class="close" onClick="deleteNote({{note[1]}})">
 	      <span aria-hidden="true">&times;</span>
