@@ -1,0 +1,31 @@
+{% extends "base.html" %} 
+{% block title %}MyStudyNotes | Filtered Notes{% endblock %} 
+{% block content%}
+	<h1 align="center">Filtered Notes</h1>
+	<ul class="list-group list-group-flush" id="notes">
+	  {% set d = dict() %}
+	  {% for note in notes %}
+	  {% if note.subject not in d %}
+	  {{ d.update({note.subject: [[note.data, note.id, note.date]]}) or ""}}
+	  {% else %}
+	  {{ d[note.subject].append([note.data,note.id, note.date]) or ""}}
+	  {% endif %}
+	  {% endfor %}
+	  {% for subject in d %}
+	  {{ subject }}
+	  <br/>
+	  <br/>
+	  {% for note in d[subject] %}
+	  <li class="list-group-item">
+            {{ note[2] }}
+	    {{ note[0] }}
+	    <button type="button" class="close" onClick="deleteNote({{note[1]}})">
+	      <span aria-hidden="true">&times;</span>
+	    </button>
+	  </li>
+	  {% endfor %}
+	  <br/>
+	  <br/>
+	  {% endfor %}
+	</ul>
+{% endblock %}

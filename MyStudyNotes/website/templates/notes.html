@@ -1,0 +1,48 @@
+{% extends "base.html" %} 
+{% block title %}MyStudyNotes | Notes{% endblock %} 
+{% block content%}
+	<form method="POST">
+		<h1 align="center">Search</h1>
+		<div class="form-group">
+			<label for="criteria">Find notes with substring:</label>
+			<input
+			  type="text"
+			  class="form-control"
+			  id="criteria"
+			  name="criteria"
+			  placeholder="Enter substring"
+			/>
+		</div>  
+		<br />
+		<button type="submit" class="btn btn-primary">Search</button>
+	</form>
+	<br/>
+	<br/>
+	<h1 align="center">Notes</h1>
+	<ul class="list-group list-group-flush" id="notes">
+	  {% set d = dict() %}
+	  {% for note in user.notes %}
+	  {% if note.subject not in d %}
+	  {{ d.update({note.subject: [[note.data, note.id, note.date]]}) or ""}}
+	  {% else %}
+	  {{ d[note.subject].append([note.data,note.id, note.date]) or ""}}
+	  {% endif %}
+	  {% endfor %}
+	  {% for subject in d %}
+	  {{ subject }}
+	  <br/>
+	  <br/>
+	  {% for note in d[subject] %}
+	  <li class="list-group-item">
+            {{ note[2] }}
+	    {{ note[0] }}
+	    <button type="button" class="close" onClick="deleteNote({{note[1]}})">
+	      <span aria-hidden="true">&times;</span>
+	    </button>
+	  </li>
+	  {% endfor %}
+	  <br/>
+	  <br/>
+	  {% endfor %}
+	</ul>
+{% endblock %}
